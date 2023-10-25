@@ -14,8 +14,8 @@ const getAllMovies = (req, res, next) => {
 };
 
 const createMovie = (req, res, next) => {
-  // const { _id } = req.user;
-  const _id = '65383003f7f436ed30aff69a';
+  const { _id } = req.user;
+  // const _id = '65383003f7f436ed30aff69a';
   const {
     country, director, duration, year, description,
     image, trailerLink, thumbnail, movieId, nameRU, nameEN,
@@ -71,8 +71,8 @@ const doesMovieExist = (req, res, next) => {
 
 const isMovieOwner = (req, res, next) => {
   const { movieId } = req.params;
-  // const { _id } = req.user;
-  const _id = '65383003f7f436ed30aff69a';
+  const { _id } = req.user;
+  // const _id = '65383003f7f436ed30aff69a';
 
   Movie.findOne({ movieId })
     .then((movie) => {
