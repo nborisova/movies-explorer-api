@@ -3,7 +3,8 @@ const InternalServerError = require('../errors/internal-server-err');
 const BadRequestError = require('../errors/bad-request-err');
 
 const getCurrentUser = (req, res, next) => {
-  const { _id } = req.user;
+  // const { _id } = req.user;
+  const { _id } = '65383003f7f436ed30aff69a';
 
   User.findOne({ _id })
     .then((user) => res.send(user))
