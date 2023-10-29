@@ -10,6 +10,7 @@ const {
   createUser,
   login,
 } = require('./controllers/users');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 4000 } = process.env;
 
@@ -18,12 +19,14 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', { useNewUrlParser: true });
 
 app.use(bodyParser.json());
+app.use(requestLogger);
 app.use(cors);
 app.post('/signup', createUser);
 app.post('/signin', login);
 app.use(auth);
 app.use('/users', routerUsers);
 app.use('/movies', routerMovies);
+app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

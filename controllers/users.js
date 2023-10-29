@@ -48,7 +48,6 @@ const login = (req, res, next) => {
 
 const getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
-  // const { _id } = '65383003f7f436ed30aff69a';
 
   User.findOne({ _id })
     .then((user) => res.send(user))
