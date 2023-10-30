@@ -1,7 +1,7 @@
 const allowedCors = [
   'http://localhost:4000',
-  'https://mesto-nb.nomoredomainsrocks.ru',
-  'https://api.mesto-nb.nomoredomain.nomoredomainsrocks.ru',
+  'https://movies-nb.nomoredomainsrocks.ru',
+  'https://api.movies-nb.nomoredomainsrocks.ru',
 ];
 
 const cors = (req, res, next) => {
