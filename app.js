@@ -16,7 +16,7 @@ const { PORT = 4000 } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', { useNewUrlParser: true });
+mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', { useNewUrlParser: true });
 
 app.use(bodyParser.json());
 app.use(requestLogger);
