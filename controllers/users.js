@@ -63,7 +63,10 @@ const updateUserInfo = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорретные данные'));
+      } else if (err.name === 'MongoServerError' && err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
       } else {
+        console.log(err.code);
         next(new InternalServerError('На сервере произошла ошибка'));
       }
     });

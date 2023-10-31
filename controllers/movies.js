@@ -7,7 +7,7 @@ const Forbidden = require('../errors/forbidden');
 const CREATED = 201;
 
 const getAllMovies = (req, res, next) => {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .populate('owner')
     .then((movies) => res.send(movies))
     .catch(() => next(new InternalServerError('На сервере произошла ошибка')));

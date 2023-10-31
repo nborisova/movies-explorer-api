@@ -20,14 +20,15 @@ router.post('/', celebrate({
     image: Joi.string().required().regex(urlRegex),
     trailerLink: Joi.string().required().regex(urlRegex),
     thumbnail: Joi.string().required().regex(urlRegex),
-    owner: Joi.string().length(24).hex().required(),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
 }), createMovie);
-router.delete('/:movieId', doesMovieExist);
-router.delete('/:movieId', isMovieOwner);
-router.delete('/:movieId', deleteMovie);
+router.delete('/:movieId', celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.number().required(),
+  }),
+}), doesMovieExist, isMovieOwner, deleteMovie);
 
 module.exports = router;
