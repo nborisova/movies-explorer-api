@@ -2,7 +2,6 @@ const Movie = require('../models/movies');
 const InternalServerError = require('../errors/internal-server-err');
 const BadRequestError = require('../errors/bad-request-err');
 const NotFoundError = require('../errors/not-found-err');
-const Forbidden = require('../errors/forbidden');
 
 const CREATED = 201;
 
@@ -50,32 +49,12 @@ const createMovie = (req, res, next) => {
 
 const doesMovieExist = (req, res, next) => {
   const { movieId } = req.params;
+  const { _id } = req.user;
 
-  Movie.findOne({ movieId })
+  Movie.findOne({ movieId, owner: _id })
     .then((movie) => {
       if (!movie) {
         next(new NotFoundError('Такого фильма нет'));
-      } else {
-        next();
-      }
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Некорректно задан id фильма'));
-      } else {
-        next(new InternalServerError('На сервере произошла ошибка'));
-      }
-    });
-};
-
-const isMovieOwner = (req, res, next) => {
-  const { movieId } = req.params;
-  const { _id } = req.user;
-
-  Movie.findOne({ movieId })
-    .then((movie) => {
-      if (movie.owner.toString() !== _id) {
-        next(new Forbidden('Недостаточно прав'));
       } else {
         next();
       }
@@ -101,6 +80,5 @@ module.exports = {
   getAllMovies,
   createMovie,
   doesMovieExist,
-  isMovieOwner,
   deleteMovie,
 };

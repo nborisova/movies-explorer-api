@@ -5,7 +5,6 @@ const {
   getAllMovies,
   createMovie,
   doesMovieExist,
-  isMovieOwner,
   deleteMovie,
 } = require('../controllers/movies');
 
@@ -29,6 +28,6 @@ router.delete('/:movieId', celebrate({
   params: Joi.object().keys({
     movieId: Joi.number().required(),
   }),
-}), doesMovieExist, isMovieOwner, deleteMovie);
+}), doesMovieExist, deleteMovie);
 
 module.exports = router;
