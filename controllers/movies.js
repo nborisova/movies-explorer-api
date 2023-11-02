@@ -70,8 +70,9 @@ const doesMovieExist = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
+  const { _id } = req.user;
 
-  Movie.findOneAndRemove({ movieId })
+  Movie.findOneAndRemove({ movieId, owner: _id })
     .then(() => res.send({ message: 'Фильм удалён' }))
     .catch(() => next(new InternalServerError('На сервере произошла ошибка')));
 };
